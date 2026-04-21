@@ -1,6 +1,6 @@
 ---
 name: jsx-component-app-dev-style
-description: "JSX/TSX 应用级组件开发范式。适用于网站、应用程序等项目中使用 JSX/TSX 编写组件。覆盖组件拆分、文件组织、样式骨架、状态管理三个阶段的规范。关键词: jsx, tsx, react, solid, component, 组件开发, 状态管理, 样式, mock data, props, jsdoc, 全局状态。"
+description: "JSX/TSX 应用级组件开发范式。适用于网站、应用程序等项目中使用 JSX/TSX 编写组件。覆盖组件拆分、文件组织、样式骨架、状态管理、Storybook 测试四个阶段的规范。关键词: jsx, tsx, react, solid, component, 组件开发, 状态管理, 样式, mock data, props, jsdoc, 全局状态, storybook, stories。"
 argument-hint: "描述要开发的组件及当前阶段，例如: 实现用户卡片组件的骨架与样式; 为搜索栏组件完善状态管理"
 user-invocable: true
 disable-model-invocation: false
@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 ## 目标
 
-为使用 JSX/TSX 的应用级项目（网站、应用程序等）提供标准化的组件开发流程，将组件实现拆分为**骨架与样式**、**操作与状态**两个阶段，配合通用规范，确保组件结构清晰、职责单一、状态管理合理。
+为使用 JSX/TSX 的应用级项目（网站、应用程序等）提供标准化的组件开发流程，将组件实现拆分为**骨架与样式**、**操作与状态**、**Storybook**三个阶段，配合通用规范，确保组件结构清晰、职责单一、状态管理合理、视觉可验证。
 
 ## 适用场景
 
@@ -18,6 +18,7 @@ disable-model-invocation: false
 - 需要将设计稿转化为组件实现。
 - 需要为组件引入或重构状态管理。
 - 组件存在内部子组件需要合理组织文件结构。
+- 需要为组件编写 Storybook story 进行视觉验证与交互测试。
 
 ## 阶段总览
 
@@ -33,6 +34,8 @@ disable-model-invocation: false
 │  阶段一: 骨架与样式    │──▶ HTML + CSS + mock data
 ├──────────────────────┤
 │  阶段二: 操作与状态    │──▶ 事件处理 + 状态管理
+├──────────────────────┤
+│  阶段三: Storybook    │──▶ *.stories.ts + story 场景
 └──────────────────────┘
     │
     ▼
@@ -152,6 +155,31 @@ export const UserCardMockData = {
 - 该状态的 `set` 和 `get` 函数。
 - 与服务端交互的逻辑也在该文件中编写。
 
+## 阶段三: Storybook
+
+> 本阶段为组件编写 Storybook story，用于视觉验证、交互测试与设计沟通。可在阶段一完成后独立执行，也可在阶段二完成后执行。
+
+### B1: Storybook 目录定位
+
+优先使用项目中已存在的 `storybook` 目录。如果不存在或存在多个同名目录，**必须**检查已实现的逻辑或询问用户意见后再做决定。
+
+### B2: 目录结构镜像
+
+Storybook 目录的层级结构与 `components` 目录保持一致，story 文件命名为 `{组件名}.stories.ts`：
+
+| 组件文件             | Story 文件                 |
+| -------------------- | -------------------------- |
+| `components/A.tsx`   | `storybook/A.stories.ts`   |
+| `components/A/A.tsx` | `storybook/A/A.stories.ts` |
+| `components/A/B.tsx` | `storybook/A/B.stories.ts` |
+
+### B3: Story 场景
+
+每个 story 文件至少包含以下场景：
+
+- **Default**：使用组件的 mock data（`${组件名称}MockData`）作为默认展示。
+- **其他场景**：根据组件的关键状态分支（如加载中、空状态、错误状态）补充对应 story。
+
 ## 流程总结
 
 > 各阶段可独立执行。若用户指定了某一阶段，直接从该阶段开始，通用步骤（1-4）始终执行。
@@ -171,5 +199,9 @@ export const UserCardMockData = {
    c. 分析并分级状态                            [O3]
    d. 全局状态放入 database/db 目录              [O4, O5, O6]
    e. 为 mock data 添加注释标记                  [S2]
-7. 最终检查: 类型注释完整、文件结构合理
+7. ── 阶段三: Storybook ──
+   a. 定位 storybook 目录                       [B1]
+   b. 按目录镜像创建 *.stories.ts 文件          [B2]
+   c. 编写 Default story 及关键场景             [B3]
+8. 最终检查: 类型注释完整、文件结构合理
 ```
