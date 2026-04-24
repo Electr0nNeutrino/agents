@@ -5,16 +5,16 @@
 When a skill, prompt, or agent generates human-readable content (e.g., summaries, reports, docs, digests, analyses) and the user has **not** explicitly specified an output path, write the content to:
 
 ```
-tmp/memory/<name>/
+agents/memory/<name>/
 ```
 
 Examples:
 
-- A `digest` skill → `tmp/memory/digest/`
-- A `commit-helper` skill → `tmp/memory/commit-helper/`
-- A `tdd-workflow` skill → `tmp/memory/tdd-workflow/`
-- A `reviewer` agent → `tmp/memory/reviewer/`
-- A `standup` prompt → `tmp/memory/standup/`
+- A `digest` skill → `agents/memory/digest/`
+- A `commit-helper` skill → `agents/memory/commit-helper/`
+- A `tdd-workflow` skill → `agents/memory/tdd-workflow/`
+- A `reviewer` agent → `agents/memory/reviewer/`
+- A `standup` prompt → `agents/memory/standup/`
 
 Rules:
 

@@ -25,9 +25,9 @@ agents: ["Explore"]
 
 ## 1. 初始化
 
-1. 读取计划文件（默认 `tmp/memory/detailed-plan/plan.md`，或用户指定的路径）
+1. 读取计划文件（默认 `agents/memory/detailed-plan/yyyyMMddhhmm.plan.md`，或用户指定的路径）
 2. 解析用户指定的任务范围，识别需要完成的 `- [ ]` 子任务列表
-3. 确认或创建当日日志文件 `tmp/memory/impl/yyyy-mm-dd.diary.md`
+3. 确认或创建当日日志文件 `agents/memory/impl/yyyyMMdd.diary.md`
 4. 使用 #tool:todo 建立任务跟踪列表
 
 ## 2. 逐项执行
@@ -47,7 +47,7 @@ agents: ["Explore"]
 
 ### c) 记录日志
 
-- 在 `tmp/memory/impl/yyyy-mm-dd.diary.md` 中追加一条记录，格式如下：
+- 在 `agents/memory/impl/yyyyMMdd.diary.md` 中追加一条记录，格式如下：
 
 ```markdown
 - [HH:MM] ✅ {步骤编号}.{子任务编号} {子任务简述}
