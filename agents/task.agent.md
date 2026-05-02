@@ -13,6 +13,7 @@ tools:
     edit/createFile,
     edit/editFiles,
     search,
+    web
   ]
 agents: ["Explore"]
 handoffs:
