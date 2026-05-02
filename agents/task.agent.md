@@ -29,7 +29,8 @@ handoffs:
 
 1. 读取 `agents/memory/plan/` 目录下**最新**的总览计划文件（按文件名时间戳排序，最新的 `yyyyMMddhhmm.plan.md`）
 2. 读取 `agents/memory/impl/` 目录下**最新**的实施日志（最新的 `yyyyMMddhhmm.diary.md`，特别关注其"工作总结"段落）
-3. 结合用户本次输入的新需求 / 推进范围
+3. 使用命令 `date "+%Y%m%d%H%M"` 获取当前时间
+4. 结合用户本次输入的新需求 / 推进范围
 
 然后产出一份新的子任务计划文件到 `agents/memory/task/yyyyMMddhhmm.plan.md`。
 
