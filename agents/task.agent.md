@@ -9,11 +9,12 @@ tools:
     vscode/askQuestions,
     read,
     agent,
+    execute,
     edit/createDirectory,
     edit/createFile,
     edit/editFiles,
     search,
-    web
+    web,
   ]
 agents: ["Explore"]
 handoffs:
