@@ -47,7 +47,11 @@ disable-model-invocation: false
 
 ## 通用规范
 
-以下规范贯穿所有阶段，必须始终遵守。
+以下规范贯穿所有阶段，必须始终遵守。规范按主题分组：
+
+- **关键（必须严格执行）**：G1（单文件组件）、G3（类型同文件）、G5（子组件拆分）、G6（实现方式决策）。
+- **结构与定位（按项目实际情况执行）**：G2（组件目录定位）。
+- **文档质量（保证可读性）**：G4（类型注释与文件说明）。
 
 ### G1: 单文件组件
 
@@ -55,7 +59,11 @@ disable-model-invocation: false
 
 ### G2: 组件目录定位
 
-组件放置于 `components` 目录中。优先使用项目中已存在的 `components` 目录。如果不存在或存在多个名为 `components` / `component` 的目录，**必须**检查已实现的逻辑或询问用户意见后再做决定。
+组件放置于 `components` 目录中。按以下顺序决策：
+
+1. 项目中已存在唯一的 `components` 目录 → 直接使用。
+2. 存在多个名为 `components` / `component` 的目录 → 先检查项目中**已实现组件**所在的目录，沿用其中出现频率最高的目录。
+3. 经步骤 2 仍无法得出明确结论，或项目中尚无任何组件实现 → 询问用户后再决定。
 
 ### G3: 类型同文件
 
@@ -82,6 +90,7 @@ disable-model-invocation: false
 1. 已有说明文档（如 README 中指定的技术选型）
 2. 先前的代码逻辑（已有的惯例与依赖）
 3. 用户说明
+4. **默认回退**：以上三条均无明确结论时，选择该项目所用框架生态中最主流、社区维护最活跃的方案（如 React 项目默认使用 CSS Modules + Zustand），并在实现时以注释标注此选择是默认回退结果，便于后续替换。
 
 例如：README 中已指定使用 jotai 作为全局状态管理，则不再考虑其他方案；项目中已使用 CSS Modules，则新组件也使用 CSS Modules。
 
@@ -104,28 +113,28 @@ Mock data 仅承担两个职责：
 
 不参与任何生产逻辑，也不被组件文件 import。
 
-### B1: Storybook 目录定位
+### B1: Story 文件与组件同级
 
-优先使用项目中已存在的 `storybook` 目录。如果不存在或存在多个同名目录，**必须**检查已实现的逻辑或询问用户意见后再做决定。
+Story 文件**必须**与对应的组件文件放在同一目录下，紧邻组件文件，类似 Go 项目中测试文件与被测文件同级的组织方式。**禁止**单独维护一个 `storybook` 目录。
 
-### B2: 目录结构镜像
+### B2: 文件命名
 
-Storybook 目录的层级结构与 `components` 目录保持一致，story 文件命名为 `{组件名}.stories.ts`：
+Story 文件命名为 `{组件名}.stories.ts`（或 `.tsx`，按项目惯例），与组件文件位于同一目录：
 
-| 组件文件             | Story 文件                 |
-| -------------------- | -------------------------- |
-| `components/A.tsx`   | `storybook/A.stories.ts`   |
-| `components/A/A.tsx` | `storybook/A/A.stories.ts` |
-| `components/A/B.tsx` | `storybook/A/B.stories.ts` |
+| 组件文件             | Story 文件                   |
+| -------------------- | ---------------------------- |
+| `components/A.tsx`   | `components/A.stories.ts`    |
+| `components/A/A.tsx` | `components/A/A.stories.ts`  |
+| `components/A/B.tsx` | `components/A/B.stories.ts`  |
 
 ### B3: Mock Data 落位
 
 Mock data 在 story 文件**内部**定义，命名格式为 `${组件名称}MockData`：
 
 ```ts
-// storybook/UserCard.stories.ts
+// components/UserCard.stories.ts
 import type { Meta, StoryObj } from "@storybook/react";
-import { UserCard } from "../components/UserCard";
+import { UserCard } from "./UserCard";
 
 /**
  * Mock data —— 仅用于 Storybook 视觉展示与设计沟通，不参与生产逻辑。
@@ -212,10 +221,9 @@ export const Default: StoryObj<typeof UserCard> = {
    a. 实现 HTML 结构与 CSS 样式                 [S1]
    b. 组件文件内不得包含 mock data              [S2]
    c. 如产生子组件，按可重用性拆分文件           [G5]
-   d. 定位 storybook 目录                       [B1]
-   e. 按目录镜像创建 *.stories.ts 文件          [B2]
-   f. 在 story 文件内定义 mock data 常量         [B3]
-   g. 编写 Default story 及关键场景             [B4]
+   d. 在组件同级创建 *.stories.ts 文件          [B1, B2]
+   e. 在 story 文件内定义 mock data 常量         [B3]
+   f. 编写 Default story 及关键场景             [B4]
 6. ── 阶段二: 操作与状态 ──
    a. (React) 检查 React Compiler               [O1]
    b. 编写事件处理逻辑                          [O2]
