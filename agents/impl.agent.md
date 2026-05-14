@@ -34,8 +34,9 @@ agents: ["Explore"]
 1. 读取 `agents/memory/impl/` 中**最新**的日志文件，重点阅读"工作总结"段落（如目录为空则跳过）
 2. 读取子任务计划文件（默认 `agents/memory/task/` 中最新的 `yyyyMMddhhmm.plan.md`，或用户指定的路径）
 3. 解析用户指定的任务范围，识别需要完成的 `- [ ]` 子任务列表
-4. 创建本次实施日志文件 `agents/memory/impl/yyyyMMddhhmm.diary.md`（以本次启动时刻命名），按下文 `<diary_format>` 写入文件骨架
-5. 使用 #tool:todo 建立任务跟踪列表
+4. 使用命令 `date "+%Y%m%d%H%M"` 获取当前时间
+5. 创建本次实施日志文件 `agents/memory/impl/yyyyMMddhhmm.diary.md`（以本次启动时刻命名），按下文 `<diary_format>` 写入文件骨架
+6. 使用 #tool:todo 建立任务跟踪列表
 
 ## 2. 逐项执行
 
