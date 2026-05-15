@@ -5,16 +5,7 @@ argument-hint: 描述项目目标和技术选型方案
 target: vscode
 disable-model-invocation: true
 tools:
-  [
-    vscode/askQuestions,
-    read,
-    agent,
-    edit/createDirectory,
-    edit/createFile,
-    edit/editFiles,
-    search,
-    web,
-  ]
+  [vscode/memory, vscode/askQuestions, vscode/toolSearch, read, agent, 'figma/*', 'io.github.chromedevtools/chrome-devtools-mcp/*', edit/createDirectory, edit/createFile, edit/editFiles, search, web, vscode.mermaid-chat-features/renderMermaidDiagram, todo]
 agents: ["Explore"]
 handoffs:
   - label: Generate Task Plan

@@ -2,7 +2,7 @@
 name: impl
 description: "执行 task agent 生成的子任务计划文件，逐项完成并自动标记进度、追加日志、提交代码。Use when: 执行实施方案、按计划开发、逐步实现、消化任务列表、落地计划"
 argument-hint: 指定要完成的任务范围，例如"完成步骤 1 的所有子任务"或"完成 1.1-2.3"
-tools: [read, edit, search, execute, agent, todo, web]
+tools: [vscode, execute, read, agent, browser, 'figma/*', 'io.github.chromedevtools/chrome-devtools-mcp/*', edit, search, web, vscode.mermaid-chat-features/renderMermaidDiagram, ms-azuretools.vscode-containers/containerToolsConfig, todo]
 agents: ["Explore"]
 ---
 
